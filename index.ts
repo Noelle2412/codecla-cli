@@ -81,11 +81,15 @@ program
     "",
   )
   .action(({ name, language, input }) => {
-    generateBoilerplate(name, language.toLowerCase(), input);
+    if (/^[A-Za-z_]\w*$/.test(name)) {
+      generateBoilerplate(name, language.toLowerCase(), input);
+    } else {
+      console.log("Invalid name, please enter a valid function name");
+    }
   });
 
 try {
   program.parse();
 } catch {
-  console.log("Process aborted");
+  console.log("Generation failed");
 }

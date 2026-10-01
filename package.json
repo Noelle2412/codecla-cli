@@ -2,7 +2,7 @@
   "name": "codecla-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": " ./output/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
@@ -14,12 +14,10 @@
   "type": "module",
   "dependencies": {
     "@inquirer/prompts": "^8.7.2",
-    "commander": "^15.0.0",
-    "inquirer": "^14.2.2",
-    "typescript": "^7.0.2"
+    "commander": "^15.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
-    "tailwindcss": "^4.3.3"
+    "typescript": "^7.0.2"
   }
 }
