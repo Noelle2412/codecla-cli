@@ -87,14 +87,16 @@ program
     "",
   )
   .action((options: GenerateOptions) => {
-    if (/^[A-Za-z_]\w*$/.test(options.name)) {
+    if (!/^[A-Za-z_]*$/.test(options.name)) {
+      console.log("Invalid name, please enter a valid function name");
+    } else if (!/^[A-Za-z_,]*$/.test(options.input)) {
+      console.log("Invalid arguments, please enter valid arguments");
+    } else {
       generateBoilerplate(
         options.name,
         options.language.toLowerCase(),
         options.input,
       );
-    } else {
-      console.log("Invalid name, please enter a valid function name");
     }
   });
 
