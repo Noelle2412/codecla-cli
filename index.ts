@@ -9,10 +9,10 @@ async function generateBoilerplate(
   language: string,
   input: string,
 ): Promise<void> {
-  if (
-    language.toLowerCase() != "javascript" &&
-    language.toLowerCase() != "python"
-  ) {
+  if (language != "javascript" && language != "python") {
+    console.log(
+      `${language} is not supported, please choose one of the following languages:`,
+    );
     language = await languageSelect();
   }
 
@@ -38,6 +38,8 @@ ${code}
 ${code}
 `);
     }
+  } else {
+    console.log("Cancelled, nothing was generated.");
   }
 }
 
@@ -77,7 +79,11 @@ program
     "",
   )
   .action(({ name, language, input }) => {
-    generateBoilerplate(name, language, input);
+    generateBoilerplate(name, language.toLowerCase(), input);
   });
 
-program.parse();
+try {
+  program.parse();
+} catch {
+  console.log("Process aborted");
+}
