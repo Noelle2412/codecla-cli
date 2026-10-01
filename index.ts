@@ -87,7 +87,7 @@ program
     "",
   )
   .action((options: GenerateOptions) => {
-    if (!/^[A-Za-z_]\w*$/.test(options.name)) {
+    if (/^[A-Za-z_]\w*$/.test(options.name)) {
       generateBoilerplate(
         options.name,
         options.language.toLowerCase(),
