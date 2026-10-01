@@ -18,12 +18,14 @@ async function generateBoilerplate(
 
   const answer = await confirmSelect(name, language, input);
   if (answer) {
+    const path: string = "generated";
+    fs.mkdirSync(path, { recursive: true });
     if (language === "javascript") {
       const code: string = `function ${name}(${input}) {
     // Your code here
     return;
 }`;
-      fs.writeFileSync(`./output/${name}.js`, code);
+      fs.writeFileSync(`${path}/${name}.js`, code);
       console.log(`Boilerplate code generated in ./output/${name}.js
 
 ${code}
@@ -32,7 +34,7 @@ ${code}
       const code: string = `def ${name}(${input}): 
     # Your code here
     return`;
-      fs.writeFileSync(`./output/${name}.py`, code);
+      fs.writeFileSync(`${path}/${name}.py`, code);
       console.log(`Boilerplate code generated in ./output/${name}.py
 
 ${code}
