@@ -4,6 +4,12 @@ import fs from "fs";
 
 const program = new Command();
 
+interface GenerateOptions {
+  name: string;
+  language: string;
+  input: string;
+}
+
 async function generateBoilerplate(
   name: string,
   language: string,
@@ -80,16 +86,20 @@ program
     "Parameters for the function, separated by a comma",
     "",
   )
-  .action(({ name, language, input }) => {
-    if (/^[A-Za-z_]\w*$/.test(name)) {
-      generateBoilerplate(name, language.toLowerCase(), input);
+  .action((options: GenerateOptions) => {
+    if (!/^[A-Za-z_]\w*$/.test(options.name)) {
+      generateBoilerplate(
+        options.name,
+        options.language.toLowerCase(),
+        options.input,
+      );
     } else {
       console.log("Invalid name, please enter a valid function name");
     }
   });
 
 try {
-  program.parse();
+  program.parseAsync();
 } catch {
   console.log("Generation failed");
 }
