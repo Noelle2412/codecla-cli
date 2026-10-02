@@ -37,7 +37,7 @@ async function generateBoilerplate(
 ${code}
 `);
     } else if (language === "python") {
-      const code: string = `def ${name}(${input}): 
+      const code: string = `def ${name}(${input}):
     # Your code here
     return`;
       fs.writeFileSync(`${path}/${name}.py`, code);
