@@ -32,7 +32,7 @@ async function generateBoilerplate(
     return;
 }`;
       fs.writeFileSync(`${path}/${name}.js`, code);
-      console.log(`Boilerplate code generated in ./output/${name}.js
+      console.log(`Boilerplate code generated in ${path}/${name}.js
 
 ${code}
 `);
@@ -41,7 +41,7 @@ ${code}
     # Your code here
     return`;
       fs.writeFileSync(`${path}/${name}.py`, code);
-      console.log(`Boilerplate code generated in ./output/${name}.py
+      console.log(`Boilerplate code generated in ${path}/${name}.py
 
 ${code}
 `);
@@ -87,10 +87,20 @@ program
     "",
   )
   .action((options: GenerateOptions) => {
-    if (!/^[A-Za-z_]*$/.test(options.name)) {
-      console.log("Invalid name, please enter a valid function name");
-    } else if (!/^[A-Za-z_,]*$/.test(options.input)) {
-      console.log("Invalid arguments, please enter valid arguments");
+    if (!/^[A-Za-z_]\w*$/.test(options.name)) {
+      program.error("Invalid name, please enter a valid function name");
+    } else if (
+      options.input &&
+      options.input
+        .split(",")
+        .reduce((valid: string, entry: string): string => {
+          if (!/^[A-Za-z_]\w*$/.test(entry)) {
+            valid = "not_valid";
+          }
+          return valid;
+        }, "valid") !== "valid"
+    ) {
+      program.error("Invalid arguments, please enter valid arguments");
     } else {
       generateBoilerplate(
         options.name,
@@ -100,8 +110,4 @@ program
     }
   });
 
-try {
-  program.parseAsync();
-} catch {
-  console.log("Generation failed");
-}
+await program.parseAsync();
